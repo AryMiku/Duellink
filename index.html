@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Duel Link</title>
+    <script src="js/data.js"></script>
+</head>
+<body>
+    Duel link <br>
+    <input type="text" id="myInput" onkeyup="myFunction()" placeholder="ค้นหาจากชื่อหรือรหัส" >
+    <div id="show"></div>
+    การ์ดที่มีการเกี่ยวข้อง
+    <div id="show2"></div>
+    <script>
+        function myFunction(){
+            var input = document.getElementById("myInput");
+            var first = '<tr><td align="center" width="5%">รหัส</td><td align="center" width="10%">ชื่อ</td><td>รูปแบบการ์ด</td><td>เงื่อนไขในการเรียก</td><td align="center" width="10%">รูปภาพ</td><td align="center" width="40%">เอฟเฟค</td>';
+            var filter = input.value.toLowerCase();
+            var test = "";
+            for(var i=0;i<data.length;i++){
+                if(data[i].Code.toLowerCase().indexOf(filter) > -1 || data[i].Name.toLowerCase().indexOf(filter) > -1 ){
+                    if(filter == ""){
+                        test = "";
+                        first = "";
+                        checkinthecard([],"");
+                    }
+                    else{
+                        test += '<tr>'+
+                        '<td align="center">'+ data[i].Code +'</td>' +
+                        '<td align="center">'+ data[i].Name + '</td>' + 
+                        '<td align="center">'+ data[i].Type2 + '</td>' + 
+                        '<td align="center">'+ data[i].Rule + '</td>' + 
+                        '<td align="center">' + data[i].Pic + '</td>' + 
+                        '<td>'+ data[i].Effect + '</td>' + 
+                        '</tr>';
+                        checkinthecard(data[i].Connect,first);
+                    }
+                    document.getElementById("show").innerHTML = '<table border="1">'+ first + test + '</table>';
+                    
+                }
+            }
+        }
+
+        function checkinthecard(value,first){
+            var test2 = "";
+            if(value.length == 0){
+                test2 = "";
+                first = "";
+            }
+            value.forEach(element => {
+                data.forEach(datas => {
+                    if(datas.Code == element){
+                        test2 += '<tr>'+
+                        '<td align="center">'+ datas.Code +'</td>' +
+                        '<td align="center">'+ datas.Name + '</td>' + 
+                        '<td align="center">'+ datas.Type2 + '</td>' + 
+                        '<td align="center">'+ datas.Rule + '</td>' + 
+                        '<td align="center">' + datas.Pic + '</td>' + 
+                        '<td>'+ datas.Effect + '</td>' + 
+                        '</tr>';
+                    }
+                });
+               
+            });
+            document.getElementById("show2").innerHTML = '<table border="1">'+ first + test2 + '</table>';
+        }
+
+    </script>
+</body>
+</html>
